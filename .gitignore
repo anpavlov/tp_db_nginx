@@ -1,3 +1,8 @@
+*~
+.idea
+*.iml
+logs
+
 # Compiled Lua sources
 luac.out
 
