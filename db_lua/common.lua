@@ -35,4 +35,37 @@ function M.get_db()
     return db
 end
 
+function M.error_encode(code, msg)
+    local cjson = require "cjson"
+    local str = cjson.encode({code=code, response=msg})
+    return str
+end
+
+function M.is_not_bool(var)
+    if var == true or var == false then
+        return false
+    else
+        return true
+    end
+end
+
+function M.user_exists(email)
+    local db = M.get_db()
+    local query = s:format('SELECT 1 as a FROM User WHERE email=%s', email)
+
+    local res, err, errno, sqlstate =
+    db:query(query)
+    if not res then
+        ngx.log(ngx.ERR, "bad result: ", err, ": ", errno, ": ", sqlstate, ".")
+        ngx.exit(500)
+    end
+
+    if res[1].a == 1 then
+        return true
+    else
+        return false
+    end
+
+end
+
 return M

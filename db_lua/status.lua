@@ -85,7 +85,7 @@ if not ok then
     ngx.exit(500)
 end
 
-
 local result = {code = 0, response = {forum = forums, post = posts, thread = threads, user = users}}
 ngx.say(cjson.encode(result))
+
 --ngx.say("Conn reused: " .. reused)
